@@ -1,0 +1,110 @@
+ function fileInput() {
+        $("#carPhoto").fileinput({
+            language:'zh',
+            uploadUrl:"<%=request.getContextPath()%>/uploadFile",
+            showCaption:true,//是否显示标题文本框
+            dropZoneEnabled:false,//是否显示拖拽区域框
+        }).on("fileuploaded",function (event,result,previewId,index) {//点击事件:发送ajax请求
+            //接收回调函数
+            var url = result.response.url;
+            //alert(url);
+            //获取隐藏的input框id 设置 value 的 属性
+           $("#photo").val(url);
+
+        })
+    }
+
+
+
+    @RequestMapping("uploadFile")
+    @ResponseBody
+    public Map asvewcsac(@RequestParam("carPhoto") CommonsMultipartFile file){
+        Map<String,Object> map = new HashMap<String, Object>();
+        String img = CopyFile.copyFile(file, "img");
+        map.put("url",img);
+        return map;
+    }
+
+
+ function fileInput2(){
+        var arr=[];
+        var photo="<%=request.getContextPath()%>/"+$("#photo").val();
+        //alert(photo);
+        if(photo!=null && photo!=""){
+            arr.push(photo);
+        }
+        $("#carPhoto").fileinput({
+            language:'zh',
+            uploadUrl:"<%=request.getContextPath()%>/uploadFile",
+            showCaption:true,//是否显示标题文本框
+             dropZoneEnabled:false,//是否显示拖拽区域框
+            initialPreview:arr,
+            initialPreviewAsData:true,
+        }).on("fileuploaded",function (event,result,previewId,index) {//点击事件:发送ajax请求
+           //接收回调函数
+           var url = result.response.url;
+            alert(url);
+           // 获取隐藏的input框id 设置 value 的 属性
+           $("#photo").val(url);
+
+
+        })
+
+    }
+
+
+
+
+ function update(id) {
+
+        var updateTable="";
+
+       $.ajax({
+           url:"<%=request.getContextPath()%>/toUpdateCar",
+           type:"post",
+           async:false,
+           data:{id:id},
+           dataType:"html",
+           success(result){
+               updateTable=result;
+           },
+            error(){
+               alert("请求失败")
+            }
+       })
+
+        bootbox.dialog({
+            message:updateTable,
+            title:"修改新闻信息",
+            buttons:{
+                取消:{
+                    "className":"btn-danger",
+                    callback:function () {
+                    }
+                },
+                提交:{
+                    "className":"btn-success",
+                    callback:function () {
+                        $.ajax({
+                            url:"<%=request.getContextPath()%>/updateCar",
+                            type:"post",
+                            data:$("#updateForm").serialize(),
+                            dataType:"json",
+                            success(result){
+                                alert(result.success);
+                                searchForm();
+                            },
+                            error(){
+                                alert("修改失败")
+                            }
+
+                        })
+                    }
+                }
+            }
+
+        })
+        fileInput2();
+
+    }
+
