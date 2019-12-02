@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fh.dao.IProductDao" >
+
+    <sql id="searcheProduct">
+        <where>
+            and p.status=1
+            <if test="parameter.cateId != null">
+                and  pc.categroyId=#{parameter.cateId}
+            </if>
+            <if test="parameter.brandId != null">
+                and p.brandId=#{parameter.brandId}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findCount" resultType="long">
+        select count(DISTINCT p.id) from t_shop_product p
+        LEFT JOIN t_shop_product_categroy pc
+        on p.id=pc.productId
+        <include refid="searcheProduct"></include>
+    </select>
+
+    <select id="queryProductList" resultType="com.fh.vo.ShopProductVo">
+        select DISTINCT p.id,p.name,p.subtitle,p.mainImg,p.price,p.stock from t_shop_product p
+        LEFT JOIN t_shop_product_categroy pc
+        on p.id=pc.productId
+        <include refid="searcheProduct"></include>
+        limit #{page.start},#{page.length}
+    </select>
+
+    <select id="getProductById" parameterType="java.lang.Integer" resultType="com.fh.vo.ShopProductVo">
+        select DISTINCT p.id,p.name,p.subtitle,p.mainImg,p.price,p.stock from t_shop_product p
+        where p.id =#{productId}
+    </select>
+
+</mapper>
