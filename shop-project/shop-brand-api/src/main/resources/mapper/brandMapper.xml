@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fh.dao.IBrandDao">
+    <select id="queryBrandList" parameterType="java.lang.Integer" resultType="com.fh.vo.ShopBeanVo">
+        select ts.id,ts.name,ts.telPhone,ts.webSite,ts.imgUrl,ts.`status`,ts.updateTime,tt.typeId from t_shop ts LEFT JOIN
+        t_shop_type tt ON
+        ts.typeId=tt.typeId
+    </select>
+</mapper>

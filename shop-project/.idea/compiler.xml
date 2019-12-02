@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="shop-brand-api" />
+        <module name="shop-cart" />
+        <module name="shop-category-api" />
+        <module name="shop-commons" />
+        <module name="shop-login" />
+        <module name="shop-product-api" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="shop-brand-api" target="8" />
+      <module name="shop-cart" target="8" />
+      <module name="shop-category-api" target="8" />
+      <module name="shop-commons" target="8" />
+      <module name="shop-login" target="8" />
+      <module name="shop-product-api" target="8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
